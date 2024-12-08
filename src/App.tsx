@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { AsteroidCard } from './components/asteroid-card/AsteroidCard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App = () => {
+  return <div>
+    {generateAsteroids(getRandomInt(5,20)).map((it, index)=>{
+      return <AsteroidCard key={index} {...it}/>})}
+  </div>
 }
 
 export default App;
+
+function generateAsteroids(count: number) {
+  const arr = new Array(count).fill({});
+  return arr.map(it => generateAsteroid(true))
+
+}
+
+function generateAsteroid(isKilometers: boolean) {
+
+  const distance = getRandomInt(100, 100000000);
+
+  return {
+    isDangerous: Boolean(getRandomInt(0,1)),
+    name: names[getRandomInt(0,2)] + getRandomInt(10, 100),
+    isKilometers: isKilometers,
+    distanceKm: distance,
+    distanceMoon: distance/384467,
+    date: generateRandomDOB(),
+    radius: getRandomInt(0, 500),
+  }
+}
+
+const names = ["test", "big asteroid", "small asteroid"];
+
+function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+const generateRandomDOB = (): string => {
+  const random = getRandomDate(new Date('2024-02-12T01:57:45.271Z'), new Date('2024-10-12T01:57:45.271Z'))
+  return random.toISOString();
+}
+function getRandomDate(from: Date, to: Date) {
+  const fromTime = from.getTime();
+  const toTime = to.getTime();
+  return new Date(fromTime + Math.random() * (toTime - fromTime));
+}
