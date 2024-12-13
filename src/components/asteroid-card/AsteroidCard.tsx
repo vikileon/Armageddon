@@ -14,32 +14,14 @@ export interface AsteroidCardProps {
   isKilometers: boolean;
 }
 
-export const AsteroidCard = (
-    props: AsteroidCardProps & {
-      setDestroyment: Dispatch<AsteroidCardProps[]>;
-    }
-  ) => {
-    const { isDangerous, setDestroyment } = props;
+export const AsteroidCard = (props: AsteroidCardProps) => {
+  const { isDangerous } = props;
 
-    return (
-        <div className={`${style.card} ${isDangerous ? style.dangerous : ""}`}>
-          <AsteroidCardImage />
-          <AsteroidCardData {...props} />
-          <AsteroidCardButton
-            onClick={() =>
-              setDestroyment(
-                //@ts-ignore
-                (destroyment: AsteroidCardProps[]) => {
-                  if (destroyment.some((it) => it.name === props.name)) {
-                    return destroyment.filter((it) => it.name === props.name);
-                  } else {
-                    destroyment.push(props);
-                    return destroyment
-                  }
-                }
-              )
-            }
-          />
-        </div>
-        );
-    };
+  return (
+    <div className={`${style.card} ${isDangerous ? style.dangerous : ""}`}>
+      <AsteroidCardImage {...props} />
+      <AsteroidCardData {...props} />
+      <AsteroidCardButton {...props} />
+    </div>
+  );
+};

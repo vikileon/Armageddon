@@ -1,6 +1,17 @@
 .selected {
-    font-weight: bold;
+  font-weight: bold;
 }
+
 .option {
-    cursor: pointer
+  cursor: pointer;
+}
+
+.listHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.onlyDangerous {
+  cursor: pointer;
 }
